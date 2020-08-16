@@ -1,0 +1,221 @@
+= Ionic-React Apps.
+Ashik T Antony 
+ashiktantony@gmail.com
+:doctype: ionic
+:encoding: utf-8
+:lang: en
+:toc: left
+:numbered:
+
+
+
+== Why ionic.
+
+____
+
+The Ionic Framework is an open-source UI toolkit for building fast, high-quality applications using web technologies with integrations for popular frameworks like Angular and React. 
+[TIP]
+====
+Ionic enables cross-platform development using either Cordova or Capacitor, with the latter featuring support for desktop application development using Electron.
+====
+
+____
+
+
+== Prerequisites
+
+Before you can start building apps with the Ionic Framework, you will need the following:
+[IMPORTANT]
+====
+Node.js (at least v10) installed on your computer
+==== 
+* working knowledge of React
+* familiarity with the Hooks API
+* some experience with TypeScript
+* a native IDE, Android Studio for Android, or XCode for iOS.
+
+== Steps to install and create ionic-react
+
+
+
+.Install ionic
+
+* Install the Ionic CLI with npm, native-run, used to run native binaries on devices and simulators/emulators, and cordova-res, used to generate native app icons and splash screens::[source,]
+----
+npm install -g @ionic/cli native-run cordova-res
+----
+[quote]
+____
+If there was a previous installation of the Ionic CLI, it will need to be uninstalled due to a change in package name.
+[source,]
+----
+npm uninstall -g ionic
+npm install -g @ionic/cli
+----
+____
+
+.Start an App
+
+Starting a new Ionic app is incredibly simple. From the command line, run the ionic start command and the CLI will handle the rest.
+
+The Ionic CLI will display prompts asking for the new project's name and which template to use. These details can be provided as command arguments:
+----
+ionic start app_name tabs --type=react --capacitor
+----
+
+tabs is not the only project template available. Between all project types, there are three templates available:
+
+* tabs: A tabs based layout
+* sidemenu: A sidemenu based layout
+* blank: An empty project with a single page.
+
+.Run the App
+
+The majority of Ionic app development can be spent right in the browser using the ionic serve command:
+----
+cd app_name
+ionic serve
+----
+.Extra dependencies
+----
+$ npm i axios //for http request
+$ npm i cordova-plugin-geolocation //for getting geolcation
+$ npm i ionicons    //for getting icon and templates
+$ npm i @codetrix-studio/capacitor-google-auth //for google authentication for android emulation
+$ npm i @ionic/pwa-elements //hooks
+----
+
+== ionic React -components used.
+
+
+[width="100%",options="header,footer"]
+|====================
+|Components  | Usage | Basic example
+|IonImg  | For adding image  |  <IonImg
+src= "assets/image.png"
+alt="sample"
+            />
+| IonButton | For adding buttons | <IonButton> button_name</IonButton> 
+|Button with routerlink  | Moving from one page to another on a button click | <IonButton routerLink="/page_name" >button_name</IonButton> 
+|IonIcon  |Insert icons  |  <IonIcon icon={newspaperOutline} />
+|IonAlert  |Provide Alert messages  |  <IonAlert
+            isOpen=boolean
+            message="message here"
+            buttons={[{text:"msg on button click",handler:  reset isOpen}]}
+          />
+| IonToast | Provide Toast message  |  <IonToast
+            isOpen=boolean
+            onDidDismiss=reset boolean
+            message="message to display"
+            duration=message time duration value as integer
+        /> 
+| IonLoading |loading....  |  <IonLoading
+                isOpen=boolean
+                onDidDismiss=reset boolean
+                message={'loading message ....'}
+            />
+|IonInput  | Input field |  <IonInput type ="mention the type" ref={varible_name}></IonInput>
+|IonLabel  |Label input  |   <IonLabel position="floating (or stacked or fixed)">label_name</IonLabel>
+|  |  |  
+|====================
+
+.Detailed doc on Ui components and plugins
+
+https://ionicframework.com/docs/components[Ui Components]
+
+https://ionicframework.com/docs/native[Plugins]
+
+== Example ionic-react-app
+
+https://ionicframework.com/docs/react/your-first-app[Ionic first app]
+
+
+== App Emulation/Deploying App
+
+.Capacitor Setup
+Complete a fresh build of the Ionic project, fixing any errors that it reports:
+----
+$ ionic build
+----
+
+Next, create both the iOS and Android projects:
+
+----
+$ ionic cap add ios
+$ ionic cap add android
+----
+
+Both android and ios folders at the root of the project are created. These are entirely standalone native projects that should be considered part of your Ionic app (i.e., check them into source control, edit them using their native tooling, etc.).
+
+Every time you perform a build (e.g. ionic build) that updates your web directory (default: build), you'll need to copy those changes into your native projects:
+
+----
+$ ionic cap copy
+----
+
+Note: After making updates to the native portion of the code (such as adding a new plugin), use the sync command:
+
+----
+$ ionic cap sync
+----
+
+.Android Emulation
+
+Capacitor Android apps are configured and managed through Android Studio. Before running this app on an Android device, there's a couple of steps to complete.
+
+First, run the Capacitor open command, which opens the native Android project in Android Studio:
+
+----
+$ ionic cap open android
+----
+
+Within Android Studio, click the "Run" button, select the attached Android device, then click OK to build, install, and launch the app on your device.
+
+For further details:Click the link below
+
+https://developer.android.com/studio/run/emulator[Run apps on Android Emulator]
+
+== Apk conversion
+
+
+== Problems Faced During .
+
+.ionic serve didn't automatically opens the server
+ 
+Solved by uninstalling react-scripts from version 3.4.1 and installing v3.4.0.
+
+.Problem with data not being posted.
+
+Solved by making some (coresheader) modification in backend.
+
+.Android Emulation Pbm (Vt-x disabled)
+
+In Short -> You must enable VT-x Technology in your BIOS.
+
+Here are the detailed steps:
+
+*1.*  Restore Optimized Defaults (Not Necessary)//Steps to start BIOS.
+ 
+
+Its better to restore Optimized Defaults
+before, But following steps are not necessary:
+
+Reboot the computer and open the system's BIOS menu. This can usually be done by pressing the delete key, the F1 key or Alt and F4 keys depending on the system.
+
+Select Restore Defaults or Restore Optimized Defaults, and then select Save & Exit.
+
+*2.* Enable VT-x Technology in BIOS (Necessary)
+
+Power on/Reboot the machine and open the BIOS (as per Step 1).
+
+Open the Processor submenu The processor settings menu may be hidden in the Chipset, Advanced CPU Configuration or Northbridge.
+
+Enable Intel Virtualization Technology (also known as Intel VT-x) or AMD-V depending on the brand of the processor. The virtualization extensions may be labelled Virtualization Extensions, Vanderpool or various other names depending on the OEM and system BIOS.
+
+Select Save & Exit.
+
+
+ 
+ 
+
+
